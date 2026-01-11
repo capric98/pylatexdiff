@@ -1,2 +1,4 @@
 # pylatexdiff
-A lightweight Python tool to generate difference files between two LaTeX documents.
+A lightweight Python tool to generate difference file between $\LaTeX$ documents.
+
+Still under developing (maybe) ...
