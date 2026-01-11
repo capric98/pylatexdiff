@@ -1,0 +1,17 @@
+[project]
+name = "pylatexdiff"
+version = "0.0.1"
+authors = [
+    { name = "capric98", email = "42015599+capric98@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "diff-match-patch>=20241021",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.24,<0.10.0"]
+build-backend = "uv_build"
+
+[project.scripts]
+pylatexdiff = "pylatexdiff.main:main"
