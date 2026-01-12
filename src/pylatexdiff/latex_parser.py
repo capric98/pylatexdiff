@@ -50,7 +50,7 @@ class LatexParser:
         # Update State Logic
         if self.stack:
             ctx = self.stack[-1]
-            if ctx.type == "CommandArg" and ctx.name in ("begin", "end"):
+            if ctx.type == "CommandArg":
                 ctx.buffer += text
 
         if cmd_name:
@@ -137,6 +137,15 @@ class LatexParser:
                 return stack.name
 
         return ""
+
+    @property
+    def current_buffer(self) -> str:
+        if not self.pending_command:
+            for stack in reversed(self.stack):
+                if stack.type == "CommandArg":
+                    return stack.buffer
+        return ""
+
 
 
 if __name__ == "__main__":
