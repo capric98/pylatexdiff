@@ -46,7 +46,7 @@ def main() -> None:
 
     f_output = sys.stdout if not args.output else open(args.output, "w", encoding="utf-8")
 
-    print(diff_tex, file=f_output, end=None, flush=True)
+    # print(diff_tex, file=f_output, end=None, flush=True)
 
     if args.output: f_output.close()
 
