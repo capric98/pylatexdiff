@@ -32,7 +32,7 @@ r"""% BEGIN PyLaTeXDiff Preamble
         r"\providecommand{" + cmd_add + "}[1]{" + impl_cmd_add(style_add) + "}\n"
         r"\providecommand{" + cmd_del + "}[1]{" + impl_cmd_del(style_del) + "}\n"
         r"% END PyLaTeXDiff Preamble"
-        "\n\n"
+        "\n\n\n"
     )
 
     return header

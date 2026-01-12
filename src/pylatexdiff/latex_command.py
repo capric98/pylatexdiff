@@ -16,6 +16,8 @@ def impl_cmd_del(style: str) -> str:
             return ""
         case "plain":
             return "#1"
+        case "strike":
+            return r"\st{#1}"
         case "underline":
             return r"\ul{#1}"
         case _:

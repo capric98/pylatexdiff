@@ -36,28 +36,40 @@ def latexdiff(
     latex_tracker = LatexParser()
 
     for diff in diffs:
+        print(diff)
         diff_type, content = diff
-        match diff_type:
-            case 0:
-                diff_tex += content
-                latex_tracker.parse(content)
-            case 1:
-                diff_tex += _wrap_safe(cmd_add, content, latex_tracker)
-            case -1:
-                diff_tex += _wrap_safe(cmd_del, content, latex_tracker)
-            case _:
-                raise ValueError(f"unknown diff type: {diff_type}")
+        diff_tex += _wrap_safe(diff, latex_tracker)
+        print("-------------------------------------------")
 
     return diff_tex
 
 
-def _wrap_safe(cmd: str, content: str, latex) -> str:
-    parent = latex.current_environment
-    if not parent:
-        # preserve new changes in the root
-        return content if cmd == cmd_add else ""
+def _wrap_safe(diff: tuple[int, str], latex) -> str:
+    diff_type, content = diff
 
-    return content
+    if diff_type == 0:
+        latex.parse(content)
+        return content
+
+    is_add = diff_type == 1
+    cmd = cmd_add if is_add else cmd_del
+
+    wrap_content = ""
+
+    while True:
+        environ = latex.environment
+        parent  = latex.parent
+
+        if environ in ["document"]:
+            if parent.lower() in ["cite", "cref"]:
+                wrap_content += cmd + r"{\mbox{" + content + "}}"
+            else:
+                wrap_content += cmd + "{" + content + "}"
+        else:
+            if is_add:
+                wrap_content += content
+
+        return wrap_content
 
 
 if __name__ == "__main__":

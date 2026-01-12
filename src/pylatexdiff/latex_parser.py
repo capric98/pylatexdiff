@@ -44,8 +44,8 @@ class LatexParser:
         other = match.group(3)
         catch_all = match.group(4)
 
-        current_hierarchy = [str(ctx) for ctx in self.stack]
-        segment = Segment(text, current_hierarchy)
+        current_hierarchies = [str(ctx) for ctx in self.stack]
+        segment = Segment(text, current_hierarchies)
 
         # Update State Logic
         if self.stack:
@@ -115,23 +115,26 @@ class LatexParser:
         remaining = content
         while remaining:
             segment, remaining = self.parse_next(remaining)
-            # print(segment, remaining)
+            print(segment)
 
             if not remaining and not segment:
                 break
 
-        print(self.current_hierarchies)
 
     @property
-    def current_hierarchies(self) -> list[str]:
-        return [str(ctx) for ctx in self.stack]
-
-    @property
-    def current_environment(self) -> str:
+    def environment(self) -> str:
         if not self.pending_command:
             for stack in reversed(self.stack):
                 if stack.type == "Environment":
                     return stack.name
+
+        return ""
+
+    @property
+    def parent(self) -> str:
+        if not self.pending_command:
+            for stack in reversed(self.stack):
+                return stack.name
 
         return ""
 

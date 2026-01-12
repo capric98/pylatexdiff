@@ -25,7 +25,7 @@ def main() -> None:
     parser.add_argument(
         "--del",
         dest="style_del",
-        choices=["none", "underline"],
+        choices=["none", "strike", "underline"],
         default="none",
         help="Style for deleted text (default: none)",
     )
@@ -46,7 +46,7 @@ def main() -> None:
 
     f_output = sys.stdout if not args.output else open(args.output, "w", encoding="utf-8")
 
-    # print(diff_tex, file=f_output, end=None, flush=True)
+    print(diff_tex, file=f_output, end=None, flush=True)
 
     if args.output: f_output.close()
 
